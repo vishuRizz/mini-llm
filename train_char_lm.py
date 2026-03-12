@@ -9,15 +9,19 @@ from torch.utils.data import Dataset, DataLoader
 from mini_transformer import build_tiny_decoder_only_transformer
 
 
-DATA_FILE = "random.txt"
+DATA_FILE = "tiny-shakespeare.txt"
 VOCAB_FILE = "vocab.json"
 MODEL_FILE = "tiny_llm.pt"
 
 BLOCK_SIZE = 64
-BATCH_SIZE = 32
-NUM_STEPS = 500
+BATCH_SIZE = 128
+NUM_STEPS = 20000
 LEARNING_RATE = 3e-4
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+DEVICE = (
+    "cuda" if torch.cuda.is_available()
+    else "mps" if getattr(torch.backends, "mps", None) and torch.backends.mps.is_available()
+    else "cpu"
+)
 
 
 def read_text(path: str) -> str:
@@ -89,13 +93,12 @@ def main() -> None:
             optimizer.step()
 
             step += 1
-            if step % 50 == 0 or step == 1:
+            if step % 1000 == 0 or step == 1:
                 print(f"Step {step}/{NUM_STEPS}, loss = {loss.item():.4f}")
 
             if step >= NUM_STEPS:
                 break
 
-    # Save model and vocab
     torch.save(model.state_dict(), MODEL_FILE)
     with open(VOCAB_FILE, "w", encoding="utf-8") as f:
         json.dump({"stoi": stoi, "itos": {str(k): v for k, v in itos.items()}}, f, ensure_ascii=False)
