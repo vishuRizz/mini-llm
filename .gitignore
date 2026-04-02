@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.venv/
+
+# Generated data and training artifacts
+data/processed/
+artifacts/

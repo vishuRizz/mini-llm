@@ -1,0 +1,10 @@
+.venv
+__pycache__
+*.py[cod]
+.git
+.gitignore
+.cursor
+artifacts
+data/processed
+*.pt
+.DS_Store
