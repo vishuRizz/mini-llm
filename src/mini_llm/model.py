@@ -128,10 +128,10 @@ class DecoderOnlyTransformer(nn.Module):
 def build_tiny_decoder_only_transformer(
     vocab_size: int,
     max_len: int,
-    d_model: int = 192,
-    num_heads: int = 6,
-    num_layers: int = 4,
-    d_ff: int = 768,
+    d_model: int = 384,
+    num_heads: int = 8,
+    num_layers: int = 8,
+    d_ff: int = 1536,
     dropout_rate: float = 0.1,
 ) -> DecoderOnlyTransformer:
     return DecoderOnlyTransformer(

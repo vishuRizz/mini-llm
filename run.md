@@ -11,7 +11,7 @@ pip install -r requirements.txt
 python3 scripts/train.py
 
 # Generate one response
-python3 scripts/generate.py --prompt "where do you live" --tokens 40 --temperature 0.8 --top-k 40
+python3 scripts/generate.py --prompt "where do you live?" --tokens 20 --temperature 0.4 --top-k 40
 
 # Interactive chat
 
