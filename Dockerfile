@@ -1,4 +1,5 @@
-# Mini-LLM training image — Linux + Python + CPU PyTorch (works on Windows/macOS/Linux via Docker)
+# Mini-LLM training image — Linux + Python + CUDA PyTorch (NVIDIA GPU via Docker)
+# CPU-only: docker build --build-arg TORCH_INDEX=cpu -t mini-ml:latest .
 FROM python:3.11-slim-bookworm
 
 ENV PYTHONUNBUFFERED=1 \
@@ -7,8 +8,10 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# CPU-only PyTorch + SentencePiece (matches requirements.txt without conflicting torch sources)
-RUN pip install torch --index-url https://download.pytorch.org/whl/cpu \
+# TORCH_INDEX=cu124 → CUDA 12.x wheels (needs NVIDIA driver + GPU passed into container)
+# TORCH_INDEX=cpu   → CPU-only wheel (smaller; no GPU in container)
+ARG TORCH_INDEX=cu124
+RUN pip install torch --index-url "https://download.pytorch.org/whl/${TORCH_INDEX}" \
  && pip install sentencepiece
 
 COPY . .

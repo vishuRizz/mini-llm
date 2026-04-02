@@ -1,15 +1,21 @@
 services:
   train:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: mini-ml:latest
+    gpus: all
     volumes:
       # Persist tokenizer, checkpoints, and processed data on the host
       - .:/app
     command: ["python", "scripts/train.py"]
 
   generate:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: mini-ml:latest
+    gpus: all
     profiles:
       - tools
     volumes:
@@ -19,8 +25,11 @@ services:
     tty: false
 
   chat:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: mini-ml:latest
+    gpus: all
     profiles:
       - tools
     volumes:
