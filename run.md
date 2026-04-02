@@ -11,9 +11,12 @@ pip install -r requirements.txt
 python3 scripts/train.py
 
 # Generate one response
-python3 scripts/generate.py --prompt "hi" --tokens 80 --temperature 0.8 --top-k 40
+python3 scripts/generate.py --prompt "where do you live" --tokens 40 --temperature 0.8 --top-k 40
 
 # Interactive chat
+
+python3 scripts/chat.py --tokens 40 --temperature 0.8 --top-k 40
+
 python scripts/chat.py
 
 # Docker (Windows-friendly): see DOCKER.md
